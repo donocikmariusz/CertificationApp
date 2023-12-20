@@ -60,7 +60,33 @@
             {
                 statistics.AddKilometers(kilometers);
             }
+            switch (statistics.Sum)
 
+            {
+                case var km when km >= 0 && km < 25:
+                    statistics.SumAssesment = "Nic się nie narobił";
+                    break;
+
+                case var km when km >= 25 && km < 125:
+                    statistics.SumAssesment = "Cos tam się narobił";
+                    break;
+
+                case var km when km >= 125 && km < 400:
+                    statistics.SumAssesment = "Napracował się dziś";
+                    break;
+
+                case var km when km >= 400 && km < 1000:
+                    statistics.SumAssesment = "Bardzo dużo się napracował";
+                    break;
+
+                case var km when km >= 1000:
+                    statistics.SumAssesment = "Zagiął czasoprzestrzeń..";
+                    break;
+
+                default:
+                    throw new Exception("Coś poszło nie tak...");
+            }
+        
             return statistics;
         }
     }

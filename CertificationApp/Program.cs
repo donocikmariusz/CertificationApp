@@ -115,7 +115,7 @@ internal class Program
         Console.WriteLine($"Max: {statistics.dailyMax}");
         Console.WriteLine($"Average: {statistics.Average:N1}");
         Console.WriteLine($"Suma kilometrów dla: {elektryczna.Type}-{elektryczna.SerialNumber} wynosi: {statistics.Sum}");
-      //  Console.WriteLine($"Ocena: {statistics.SumAssesment}");
+        Console.WriteLine($"Ocena: {statistics.SumAssesment}");
     }
     private static void TypeSpalinowa()
     {
