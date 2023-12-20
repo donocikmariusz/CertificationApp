@@ -1,39 +1,25 @@
-﻿
-namespace CertificationApp.Tests
+﻿namespace CertificationApp
 {
-    public class TypeTests
+
+    public class LokTests
     {
         [Test]
-        public void TestRef()
+        public void Test1()
         {
-            //arrange
-            var lok1 = GetLok("EP08");
-            var lok2 = GetLok("EP08");
+            // arrange
+            var lok = new Spalinowa("SP32", "181");
+            lok.AddKilometer(99);
+            lok.AddKilometer(45);
+            lok.AddKilometer(12);
+            lok.AddKilometer(11);
 
-            //act
+            // act
+            var result = lok.GetStatistics();
 
-
-            //assert
-            Assert.AreEqual(lok1.Type, lok2.Type);
-        }
-
-        [Test]
-        public void TestValue()
-        {
-            //arrange
-            int number1 = 1;
-            int number2 = 2;
-
-            //act
-
-
-            //assert
-            Assert.AreEqual(number1, number2);
-        }
-
-        private Lok GetLok(string type)
-        {
-            return new Lok(type);
+            // assert
+            Assert.AreEqual(41.8, result.Average, 1);
+            Assert.AreEqual(99, result.dailyMax, 1);
+            Assert.AreEqual(11, result.dailyMin, 1);
         }
     }
 }

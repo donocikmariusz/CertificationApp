@@ -14,13 +14,13 @@ internal class Program
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Wybierz lokomotywę:\n" +
             "1. - Elektryczna (zapis tylko do pamięci)\n" +
-            "2. - Spalinowa (zapis tylko do pliku)\n" +
+            "2. - Spalinowa (zapis i odczyt do/z pliku)\n" +
             "Twój wybór: (lub 'q' lub 'Q' żeby wyjść)");
             Console.ResetColor();
 
             try
             {
-                var wybor = Console.ReadLine();
+                var wybor = Console.ReadLine().ToUpper();
 
                 switch (wybor)
                 {
@@ -115,7 +115,7 @@ internal class Program
         Console.WriteLine($"Max: {statistics.dailyMax}");
         Console.WriteLine($"Average: {statistics.Average:N1}");
         Console.WriteLine($"Suma kilometrów dla: {elektryczna.Type}-{elektryczna.SerialNumber} wynosi: {statistics.Sum}");
-        Console.WriteLine($"Ocena: {statistics.SumAssesment}");
+      //  Console.WriteLine($"Ocena: {statistics.SumAssesment}");
     }
     private static void TypeSpalinowa()
     {

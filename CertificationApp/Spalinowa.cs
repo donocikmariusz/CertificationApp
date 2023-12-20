@@ -87,11 +87,38 @@
                 result.AddKilometers(k);
             }
 
+            switch (result.Sum)
+
+            {
+                case var km when km >= 0 && km < 25:
+                    result.SumAssesment = "Stan paliwa OK";
+                    break;
+
+                case var km when km >= 25 && km < 125:
+                    result.SumAssesment = "Ostrzeżenie o sprawdzeniu stanu paliwa";
+                    break;
+
+                case var km when km >= 125 && km < 400:
+                    result.SumAssesment = "Konieczne sprwdzenie stanu paliwa";
+                    break;
+
+                case var km when km >= 400 && km < 1000:
+                    result.SumAssesment = "Konieczne uzupełenienie paliwa!";
+                    break;
+
+                case var km when km >= 1000:
+                    result.SumAssesment = "To z jaką prędkością się ona porusza?";
+                    break;
+
+                default:
+                    throw new Exception("Coś poszło nie tak...");
+            }
             return result;
         }
     }
-
 }
-      
-   
+
+
+
+
 
