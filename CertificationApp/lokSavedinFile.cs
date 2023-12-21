@@ -1,11 +1,10 @@
 ﻿namespace CertificationApp
 {
-    public class Spalinowa : LokBase
+    public class lokSavedInFile : LokBase
     {
-        public override event KilometersAddedDelegate KilometersAdded;
-        private List<float> kilometers = new List<float>();
+        public event KilometersAddedDelegate KilometersAdded;
         private const string fileName = "kilometers.txt";
-        public Spalinowa(string type, string serialNumber)
+        public lokSavedInFile(string type, string serialNumber)
              : base(type, serialNumber)
         {
             this.Type = type;
@@ -17,8 +16,7 @@
         {
             if (kilometer > 0)
             {
-                this.kilometers.Add(kilometer);
-
+                this.OnKilometersAdded();
                 using (var writer = File.AppendText(fileName))
                 {
                     writer.WriteLine(kilometer);
@@ -26,29 +24,11 @@
             }
             else if (kilometer < 0)
             {
-                throw new Exception("Kilometry przejechane się już nie odprzejadą");
+                throw new Exception("The kilometers already traveled will no longer be forgotten..");
             }
             else
             {
-                throw new Exception("Bez sensu dodawać kilometry jak ich wartosć to 0");
-            }
-        }
-
-        public override void AddKilometer(int kilometer)
-        {
-            float kilometerAsFloat = kilometer;
-            this.AddKilometer(kilometerAsFloat);
-        }
-
-        public override void AddKilometer(string kilometer)
-        {
-            if (float.TryParse(kilometer, out float result))
-            {
-                this.AddKilometer(result);
-            }
-            else
-            {
-                throw new Exception();
+                throw new Exception("It does not make sens to add 0 value of the kilometers..");
             }
         }
         public override Statistics GetStatistics()
@@ -80,41 +60,42 @@
 
         private Statistics CountStatistics(List<float> kilometers)
         {
-            var result = new Statistics();
+            var statistics = new Statistics();
 
             foreach (var k in kilometers)
             {
-                result.AddKilometers(k);
+                statistics.AddKilometers(k);
             }
 
-            switch (result.Sum)
+            switch (statistics.Sum)
 
             {
                 case var km when km >= 0 && km < 25:
-                    result.SumAssesment = "Stan paliwa OK";
+                    statistics.SumAssesment = "Fuel level probably OK";
                     break;
 
                 case var km when km >= 25 && km < 125:
-                    result.SumAssesment = "Ostrzeżenie o sprawdzeniu stanu paliwa";
+                    statistics.SumAssesment = "Warning - chech fuel level";
                     break;
 
                 case var km when km >= 125 && km < 400:
-                    result.SumAssesment = "Konieczne sprwdzenie stanu paliwa";
+                    statistics.SumAssesment = "Fuel level has to be checked";
                     break;
 
                 case var km when km >= 400 && km < 1000:
-                    result.SumAssesment = "Konieczne uzupełenienie paliwa!";
+                    statistics.SumAssesment = "It is absolutely necessary to refill the fuel!";
                     break;
 
                 case var km when km >= 1000:
-                    result.SumAssesment = "To z jaką prędkością się ona porusza?";
+                    statistics.SumAssesment = "What was the speed?";
                     break;
 
                 default:
-                    throw new Exception("Coś poszło nie tak...");
+                    throw new Exception("sth went wrong...");
             }
-            return result;
+            return statistics;
         }
+
     }
 }
 

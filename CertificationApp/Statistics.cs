@@ -11,7 +11,6 @@ namespace CertificationApp
                 return this.Sum / this.Count;
             }
         }
-
         public float Sum { get; private set; }
         public string SumAssesment { get; set; }
         public int Count { get; private set; }

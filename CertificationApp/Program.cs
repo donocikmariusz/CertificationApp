@@ -5,31 +5,31 @@ internal class Program
 
     private static void Main(string[] args)
     {
-     
         bool exitApp = false;
-        Console.WriteLine("Program do monitorowania przebiegów lokomotyw\n" +
+        Console.WriteLine("Program for monitoring the daily distances [km] of locomotives \n" +
     "------------------------------------------------");
         while (!exitApp)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Wybierz lokomotywę:\n" +
-            "1. - Elektryczna (zapis tylko do pamięci)\n" +
-            "2. - Spalinowa (zapis i odczyt do/z pliku)\n" +
-            "Twój wybór: (lub 'q' lub 'Q' żeby wyjść)");
+            Console.WriteLine("Choose a locomotive:\n" +
+            "1. - Electric (save to memory only)\n" +
+            "2. - Diesel (save and read to/from file)\n" +
+            "Your choice: (or 'q' or 'Q' to exit)");
             Console.ResetColor();
 
             try
             {
-                var wybor = Console.ReadLine().ToUpper();
+                var inputUser = Console.ReadLine().ToUpper();
 
-                switch (wybor)
+                switch (inputUser)
                 {
                     case "1":
-                        TypeElektryczna();
+
+                        AddLokToMemory();
                         break;
 
                     case "2":
-                        TypeSpalinowa();
+                        AddLokToFile();
                         break;
 
                     case "Q":
@@ -43,16 +43,38 @@ internal class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Exception złapany: {ex.Message}");
+                Console.WriteLine($"Exception catched: {ex.Message}");
                 Console.WriteLine();
                 continue;
             }
         }
     }
-    private void WriteMessageInConsoleInUpper(string text)
+
+    private static void AddLokToMemory()
     {
-        Console.WriteLine(text.ToUpper());
+        string type = GetDataFromUser("Enter type of locomotive ex (SP32, EP08, EP09, SU46): ");
+        string serialNumber = GetDataFromUser("Enter locomotive serial number: ");
+        var lokInMemory = new lokSavedinMemory(type, serialNumber);
+        lokInMemory.KilometersAdded += KmAdded;
+        EnterKilometers(lokInMemory);
+        lokInMemory.showStatistics();
     }
+
+    private static void AddLokToFile()
+    {
+        string type = GetDataFromUser("Enter type of locomotive ex (SP32, EP08, EP09, SU46): ");
+        string serialNumber = GetDataFromUser("Enter locomotive serial number: ");
+        var lokInFile = new lokSavedInFile(type, serialNumber);
+        lokInFile.KilometersAdded += KmAdded;
+        EnterKilometers(lokInFile);
+        lokInFile.showStatistics();
+    }
+
+    static void KmAdded(object sender, EventArgs args)
+    {
+        Console.WriteLine($"Km Added");
+    }
+
     static string GetDataFromUser(string text)
     {
         while (true)
@@ -62,7 +84,7 @@ internal class Program
 
             if (string.IsNullOrEmpty(userInput))
             {
-                Console.WriteLine("Pole nie może być puste");
+                Console.WriteLine("Field cannot be empty");
                 Console.WriteLine("");
             }
 
@@ -72,21 +94,11 @@ internal class Program
             }
         }
     }
-    private static void TypeElektryczna()
+    private static void EnterKilometers(ILok lok)
     {
-        string type = GetDataFromUser("Podaj rodzaj lokomotywy: ");
-        string serialNumber = GetDataFromUser("Podaj numer seryjny lokomotywy: ");
-        var elektryczna = new Elektryczna(type, serialNumber);
-        elektryczna.KilometersAdded += ElektrycznaKilometersAdded;
-
-        void ElektrycznaKilometersAdded(object sender, EventArgs args)
-        {
-            Console.WriteLine("Dodano km");
-        }
-
         while (true)
         {
-            Console.WriteLine("Podaj kolejny przegieg km:");
+            Console.WriteLine("Enter another distance of (km)");
             var dailykm = Console.ReadLine().ToUpper();
 
             if (dailykm == "Q")
@@ -96,65 +108,20 @@ internal class Program
 
             try
             {
-                elektryczna.AddKilometer(dailykm);
+                lok.AddKilometer(dailykm);
             }
 
             catch (Exception ex)
             {
-                Console.WriteLine($"Złapano exception: {ex.Message}");
+                Console.WriteLine($"exception catched: {ex.Message}");
             }
 
             finally
             {
-                Console.WriteLine($"Wciśnij Q aby wyświetlić statystyki dla {elektryczna.Type} - {elektryczna.SerialNumber} i wyjść z programu)");
+                Console.WriteLine($"Press Q to show statistics for {lok.Type} - {lok.SerialNumber} and exit the program)");
             }
         }
-
-        var statistics = elektryczna.GetStatistics();
-        Console.WriteLine($"Min: {statistics.dailyMin}");
-        Console.WriteLine($"Max: {statistics.dailyMax}");
-        Console.WriteLine($"Average: {statistics.Average:N1}");
-        Console.WriteLine($"Suma kilometrów dla: {elektryczna.Type}-{elektryczna.SerialNumber} wynosi: {statistics.Sum}");
-        Console.WriteLine($"Ocena: {statistics.SumAssesment}");
-    }
-    private static void TypeSpalinowa()
-    {
-        string type = GetDataFromUser("Podaj rodzaj lokomotywy: ");
-        string serialNumber = GetDataFromUser("Podaj numer seryjny lokomotywy: ");
-        var spalinowa = new Spalinowa(type, serialNumber);
-
-        while (true)
-        {
-            Console.WriteLine("Podaj kolejny przegieg km:");
-            var dailykm = Console.ReadLine().ToUpper();
-
-            if (dailykm == "Q")
-            {
-                break;
-            }
-
-            try
-            {
-                spalinowa.AddKilometer(dailykm);
-            }
-
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Złapano exception: {ex.Message}");
-            }
-
-            finally
-            {
-                Console.WriteLine($"Wciśnij Q aby wyświetlić statystyki dla {spalinowa.Type} - {spalinowa.SerialNumber} i wyjść z programu)");
-            }
-        }
-
-        var statistics = spalinowa.GetStatistics();
-        Console.WriteLine($"Min: {statistics.dailyMin}");
-        Console.WriteLine($"Max: {statistics.dailyMax}");
-        Console.WriteLine($"Average: {statistics.Average:N1}");
-        Console.WriteLine($"Suma kilometrów dla: {spalinowa.Type}-{spalinowa.SerialNumber} wynosi: {statistics.Sum}");
-        Console.WriteLine($"Ocena: {statistics.SumAssesment}");
     }
 }
+
 
