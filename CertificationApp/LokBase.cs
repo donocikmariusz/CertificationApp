@@ -43,7 +43,7 @@
                 Console.WriteLine($"Min: {stat.dailyMin}");
                 Console.WriteLine($"Max: {stat.dailyMax}");
                 Console.WriteLine($"Average: {stat.Average:N1}");
-                Console.WriteLine($"Suma km for: {this.Type}-{this.SerialNumber} wynosi: {stat.Sum}");
+                Console.WriteLine($"Sum km for: {this.Type}-{this.SerialNumber} is: {stat.Sum}");
                 Console.WriteLine($"Comment: {stat.SumAssesment}");
             }
             else
