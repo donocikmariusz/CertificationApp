@@ -24,12 +24,15 @@ internal class Program
                 switch (inputUser)
                 {
                     case "1":
-
-                        AddLokToMemory();
+                        EnterTypeAndSerialNumber(out string TypeInMemory, out string SerialNumberInMemory);
+                        var lokInMemory = new LokSavedinMemory(TypeInMemory, SerialNumberInMemory);
+                        AddKilometers(lokInMemory);
                         break;
 
                     case "2":
-                        AddLokToFile();
+                        EnterTypeAndSerialNumber(out string TypeInFile, out string SerialNumberInFile);
+                        var lokInFile = new LokSavedInFile(TypeInFile, SerialNumberInFile);
+                        AddKilometers(lokInFile);
                         break;
 
                     case "Q":
@@ -50,24 +53,17 @@ internal class Program
         }
     }
 
-    private static void AddLokToMemory()
+    private static void EnterTypeAndSerialNumber(out string type, out string serialNumber)
     {
-        string type = GetDataFromUser("Enter type of locomotive ex (SP32, EP08, EP09, SU46): ");
-        string serialNumber = GetDataFromUser("Enter locomotive serial number: ");
-        var lokInMemory = new lokSavedinMemory(type, serialNumber);
-        lokInMemory.KilometersAdded += KmAdded;
-        EnterKilometers(lokInMemory);
-        lokInMemory.showStatistics();
+        type = GetDataFromUser("Enter type of locomotive ex (SP32, EP08, EP09, SU46): ");
+        serialNumber = GetDataFromUser("Enter locomotive serial number: ");
     }
 
-    private static void AddLokToFile()
-    {
-        string type = GetDataFromUser("Enter type of locomotive ex (SP32, EP08, EP09, SU46): ");
-        string serialNumber = GetDataFromUser("Enter locomotive serial number: ");
-        var lokInFile = new lokSavedInFile(type, serialNumber);
-        lokInFile.KilometersAdded += KmAdded;
-        EnterKilometers(lokInFile);
-        lokInFile.showStatistics();
+    private static void AddKilometers(ILok lok)
+    {       
+        lok.KilometersAdded += KmAdded;
+        EnterKilometers(lok);
+        lok.ShowStatistics();
     }
 
     static void KmAdded(object sender, EventArgs args)

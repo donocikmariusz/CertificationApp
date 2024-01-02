@@ -1,10 +1,10 @@
 ﻿namespace CertificationApp
 {
-    public class lokSavedInFile : LokBase
+    public class LokSavedInFile : LokBase
     {
         public event KilometersAddedDelegate KilometersAdded;
         private const string fileName = "kilometers.txt";
-        public lokSavedInFile(string type, string serialNumber)
+        public LokSavedInFile(string type, string serialNumber)
              : base(type, serialNumber)
         {
             this.Type = type;

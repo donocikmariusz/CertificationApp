@@ -5,7 +5,6 @@
         public delegate void KilometersAddedDelegate(object sender, EventArgs args);
         public event KilometersAddedDelegate KilometersAdded;
 
-          private List<float> kilometers = new List<float>();
         public LokBase(string type, string serialNumber)
         {
             this.Type = type;
@@ -35,7 +34,7 @@
             }
         }
 
-        public void showStatistics()
+        public void ShowStatistics()
         {
             var stat = GetStatistics();
             if (stat.Count != 0)

@@ -10,6 +10,7 @@ namespace CertificationApp
         void AddKilometer(string kilometer);
         void AddKilometer(int kilometer);
         Statistics GetStatistics();
+        void ShowStatistics();
         event KilometersAddedDelegate KilometersAdded;
     }
 }

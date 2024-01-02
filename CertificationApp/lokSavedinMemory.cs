@@ -1,10 +1,10 @@
 ﻿namespace CertificationApp
 {
-    public class lokSavedinMemory : LokBase
+    public class LokSavedinMemory : LokBase
     {
       
         private List<float> kilometers = new List<float>();
-        public lokSavedinMemory(string type, string serialNumber)
+        public LokSavedinMemory(string type, string serialNumber)
             : base(type, serialNumber)
         {
 

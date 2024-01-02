@@ -7,7 +7,7 @@
         public void Test1()
         {
             // arrange
-            var lok = new lokSavedInFile("SP32", "181");
+            var lok = new LokSavedInFile("SP32", "181");
             lok.AddKilometer(99);
             lok.AddKilometer(45);
             lok.AddKilometer(12);
