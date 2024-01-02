@@ -2,20 +2,21 @@
 {
     internal class Program
     {
+
         private static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             bool exitApp = false;
             Console.WriteLine("Program for monitoring the daily distances [km] of locomotives \n" +
                               "------------------------------------------------");
 
             while (!exitApp)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+
                 Console.WriteLine("Choose a locomotive:\n" +
                                   "1. - Electric (save to memory only)\n" +
                                   "2. - Diesel (save and read to/from file)\n" +
                                   "Your choice: (or 'q' or 'Q' to exit)");
-                Console.ResetColor();
 
                 try
                 {

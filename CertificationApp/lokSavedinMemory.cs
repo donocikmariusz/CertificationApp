@@ -38,11 +38,11 @@
             switch (statistics.Sum)
             {
                 case var km when km >= 0 && km < 25:
-                    statistics.SumAssessment = "She did let's say no job today";
+                    statistics.SumAssessment = "She did let's say no job today, 800+ program is at risk!!!";
                     break;
 
                 case var km when km >= 25 && km < 125:
-                    statistics.SumAssessment = "She did some..";
+                    statistics.SumAssessment = "She did some..but not to much to be able to pay for life-losers...";
                     break;
 
                 case var km when km >= 125 && km < 400:
@@ -50,7 +50,7 @@
                     break;
 
                 case var km when km >= 400 && km < 1000:
-                    statistics.SumAssessment = "She did a great job";
+                    statistics.SumAssessment = "She did a great job. The government have take a lot of taxes and support his electorare..";
                     break;
 
                 case var km when km >= 1000:
